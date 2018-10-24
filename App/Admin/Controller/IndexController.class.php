@@ -6,7 +6,18 @@ class IndexController extends Controller {
 
 	//后台登陆
     public function index(){
-        $this->display('Login:login');
+
+        //验证是否用户已经登陆过, 如果已经登录过,直接跳转到后台首页; 否则, 渲染后台登录页
+        $user_id   = cookie('user_id');
+        $user_name = cookie('user_name');
+        $user_salt = cookie('user_salt');
+        $user = D('users')->getUserById($user_id);
+        $salt = md5($user['salt'].C('SALT'));
+        if($user_id && $user_name && $user_salt && $user_name == $user['name'] && $user_salt == $salt){
+            $this->redirect('/admin/Admin/index');
+        }else{
+            $this->display('Login:login');
+        }
     }
 
     public function successpass(){
@@ -49,7 +60,8 @@ class IndexController extends Controller {
     	cookie('user_name',$user['name']);
     	$salt = md5($user['salt'].C('SALT'));
     	cookie('user_salt',$salt);
-
+        
+        //登录成功后的返回json格式
     	$info['code'] = 1;
     	$info['msg']  = '登陆成功!';
     	$info['url']  = U('Admin/Admin/index');
