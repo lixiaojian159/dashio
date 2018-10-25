@@ -82,6 +82,18 @@ class IndexController extends Controller {
     function check_verify($code, $id = ''){
 	    $verify = new \Think\Verify();
 	    return $verify->check($code, $id);
-    } 
+    }
+
+
+    //退出系统
+    public function logout(){
+        cookie('user_id',null);
+        cookie('user_name',null);
+        cookie('user_salt',null);
+        $arr['code'] = 1;
+        $arr['msg']  = '安全退出!';
+        $arr['url']  = U('Admin/Index/index');
+        echo json_encode($arr);
+    }
 
 }
