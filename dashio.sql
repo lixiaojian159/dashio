@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2018-10-24 10:09:14
+-- Generation Time: 2018-10-25 10:38:15
 -- 服务器版本： 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -34,6 +34,7 @@ CREATE TABLE `users` (
   `password` varchar(32) NOT NULL DEFAULT '',
   `remember` varchar(32) NOT NULL DEFAULT '',
   `salt` varchar(10) NOT NULL DEFAULT '',
+  `email` varchar(200) NOT NULL DEFAULT '',
   `logintime` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -41,8 +42,8 @@ CREATE TABLE `users` (
 -- 转存表中的数据 `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `password`, `remember`, `salt`, `logintime`) VALUES
-(1, 'admin', 'b9d11b3be25f5a1a7dc8ca04cd310b28', '', 'admin', '');
+INSERT INTO `users` (`id`, `name`, `password`, `remember`, `salt`, `email`, `logintime`) VALUES
+(1, 'admin', 'b9d11b3be25f5a1a7dc8ca04cd310b28', '', 'admin', '852688838@qq.com', '');
 
 --
 -- Indexes for dumped tables
