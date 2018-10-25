@@ -4,7 +4,7 @@
  * @Author: 李健
  * @Date:   2018-10-24 11:38:09
  * @Last Modified by:   banana
- * @Last Modified time: 2018-10-24 16:03:03
+ * @Last Modified time: 2018-10-25 16:24:54
  * @E-mail: 852688838@qq.com
  * @Tel: 18633899381
  */
@@ -39,5 +39,12 @@ class UsersModel extends Model{
      */
 	public function getUserById($id){
 		return $this->db->find($id);
+	}
+
+	public function getUserImgById($id){
+		$user  = $this->getUserById($id);
+		$email = md5(strtolower(trim($user['email'])));
+		$src   = 'https://www.gravatar.com/avatar/'.$email;
+		return $src;
 	}
 }

@@ -13,7 +13,10 @@ create table users(
 	password varchar(32) not null default '',
 	remember varchar(32) not null default '',
 	salt varchar(10) not null default '',
+	email varchar(200) not null default '',
 	logintime varchar(100) not null default ''
 )engine=InnoDB default charset=utf8;
 
 alter table users add salt varchar(10) not null default '' after remember;
+
+alter table users add email varchar(200) not null default '' after salt;
