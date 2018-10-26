@@ -20,3 +20,7 @@ create table users(
 alter table users add salt varchar(10) not null default '' after remember;
 
 alter table users add email varchar(200) not null default '' after salt;
+
+alter table users add keycode varchar(10) not null default '' after email;
+
+alter table users add route int(1) not null default 0 after keycode;
