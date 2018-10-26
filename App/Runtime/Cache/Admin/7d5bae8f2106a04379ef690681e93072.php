@@ -6,6 +6,8 @@
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
+<?php
+$user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = D('users')->getUserImgById($user_id); $route = D('users')->getRouteById($user_id); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -258,14 +260,15 @@
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
       <p class="centered"><a href="profile.html"><img src="<?php echo ($gravatar_src); ?>" width="50px" class="img-circle" width="80"></a></p>
-      <h5 class="centered"><?php echo ($name); ?></h5>
+      <h5 class="centered"><?php echo ($user_name); ?></h5>
       <li class="mt">
-        <a class="active" href="index.html">
+        <a class="active" href="<?php echo U('Admin/Admin/index');?>">
           <i class="fa fa-dashboard"></i>
           <span>主页</span>
           </a>
       </li>
-      <li class="sub-menu">
+
+      <?php if($route): ?><li class="sub-menu">
         <a href="javascript:;">
           <i class="fa fa-desktop"></i>
           <span>账户管理</span>
@@ -276,7 +279,8 @@
           <li><a href="panels.html">Panels</a></li>
           <li><a href="font_awesome.html">Font Awesome</a></li>
         </ul>
-      </li>
+      </li><?php endif; ?>
+
       <li class="sub-menu">
         <a href="javascript:;">
           <i class="fa fa-cogs"></i>

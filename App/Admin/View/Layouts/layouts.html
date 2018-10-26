@@ -6,6 +6,12 @@
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
+<?php
+$user_id   = cookie('user_id');
+$user_name = cookie('user_name');
+$gravatar_src = D('users')->getUserImgById($user_id);
+$route = D('users')->getRouteById($user_id);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
