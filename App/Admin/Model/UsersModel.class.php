@@ -3,8 +3,8 @@
 /**
  * @Author: 李健
  * @Date:   2018-10-24 11:38:09
- * @Last Modified by:   banana
- * @Last Modified time: 2018-10-25 16:24:54
+ * @Last Modified by:   lijian
+ * @Last Modified time: 2018-10-27 01:11:19
  * @E-mail: 852688838@qq.com
  * @Tel: 18633899381
  */
@@ -40,11 +40,21 @@ class UsersModel extends Model{
 	public function getUserById($id){
 		return $this->db->find($id);
 	}
-
+    
+    /**
+     * [getUserImgById 通过ID获取用户的邮箱,然后生成gravatar,并返回]
+     * @param  [int]     $id   用户ID
+     * @return [string]  $src  用户头像src
+     */
 	public function getUserImgById($id){
 		$user  = $this->getUserById($id);
 		$email = md5(strtolower(trim($user['email'])));
 		$src   = 'https://www.gravatar.com/avatar/'.$email;
 		return $src;
+	}
+
+	public function getRouteById($id){
+		$user = $this->getUserById($id);
+		return $user['route'];
 	}
 }

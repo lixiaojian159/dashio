@@ -3,13 +3,15 @@
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
       <p class="centered"><a href="profile.html"><img src="{$gravatar_src}" width="50px" class="img-circle" width="80"></a></p>
-      <h5 class="centered">{$name}</h5>
+      <h5 class="centered">{$user_name}</h5>
       <li class="mt">
-        <a class="active" href="index.html">
+        <a class="active" href="{:U('Admin/Admin/index')}">
           <i class="fa fa-dashboard"></i>
           <span>主页</span>
           </a>
       </li>
+
+      <if condition="$route">
       <li class="sub-menu">
         <a href="javascript:;">
           <i class="fa fa-desktop"></i>
@@ -22,6 +24,8 @@
           <li><a href="font_awesome.html">Font Awesome</a></li>
         </ul>
       </li>
+      </if>
+
       <li class="sub-menu">
         <a href="javascript:;">
           <i class="fa fa-cogs"></i>

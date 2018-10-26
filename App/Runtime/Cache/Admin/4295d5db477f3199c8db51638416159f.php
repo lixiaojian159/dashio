@@ -6,6 +6,8 @@
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
+<?php
+$user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = D('users')->getUserImgById($user_id); $route = D('users')->getRouteById($user_id); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -258,14 +260,15 @@
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
       <p class="centered"><a href="profile.html"><img src="<?php echo ($gravatar_src); ?>" width="50px" class="img-circle" width="80"></a></p>
-      <h5 class="centered"><?php echo ($name); ?></h5>
+      <h5 class="centered"><?php echo ($user_name); ?></h5>
       <li class="mt">
-        <a class="active" href="index.html">
+        <a class="active" href="<?php echo U('Admin/Admin/index');?>">
           <i class="fa fa-dashboard"></i>
           <span>主页</span>
           </a>
       </li>
-      <li class="sub-menu">
+
+      <?php if($route): ?><li class="sub-menu">
         <a href="javascript:;">
           <i class="fa fa-desktop"></i>
           <span>账户管理</span>
@@ -276,7 +279,8 @@
           <li><a href="panels.html">Panels</a></li>
           <li><a href="font_awesome.html">Font Awesome</a></li>
         </ul>
-      </li>
+      </li><?php endif; ?>
+
       <li class="sub-menu">
         <a href="javascript:;">
           <i class="fa fa-cogs"></i>
@@ -379,18 +383,129 @@
     	 <section class="wrapper">
 			    
 	<div class="row mt">
-        <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="col-lg-4 col-md-6 col-sm-10">
         	<div class="showback">
                 <h4><i class="fa fa-angle-right"></i> 授权</h4>
-                <button type="button" class="btn btn-default">生成开户码</button>
-                <button type="button" class="btn btn-primary">Primary</button>
-                <button type="button" class="btn btn-success">Success</button>
-                <button type="button" class="btn btn-info">Info</button>
-                <button type="button" class="btn btn-warning">Warning</button>
-                <button type="button" class="btn btn-danger">Danger</button>
+                <button type="button" class="btn btn-default" id="keyCode">生成开户码</button>
+                <button type="button" class="btn btn-success" id="success">确定</button>
+                <div style="margin-top: 20px">
+                    <form role="form" class="form-horizontal style-form">
+                        <div class="form-group has-success">
+                          <div class="col-lg-8">
+                            <input type="text" placeholder="自动生成开户授权码" id="key" readonly class="form-control" style="text-align: center">
+                          </div>
+                        </div>
+                    </form>
+                </div>
             </div>  
         </div>
-    </div>      
+    </div>
+
+     <!-- row -->
+        <div class="row mt">
+          <div class="col-md-12">
+            <div class="content-panel">
+              <table class="table table-striped table-advance table-hover">
+                <h4><i class="fa fa-angle-right"></i> 开户授权码</h4>
+                <hr>
+                <thead>
+                  <tr>
+                    <th><i class="fa fa-bullhorn"></i> ID</th>
+                    <th class="hidden-phone"><i class="fa fa-question-circle"></i> 用户名</th>
+                    <th><i class="fa fa-bookmark"></i> 授权码</th>
+                    <th><i class=" fa fa-edit"></i> 邮箱</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <?php if(is_array($users)): foreach($users as $key=>$user): ?><tr>
+                        <td><?php echo ($user["id"]); ?></td>
+                        <td class="hidden-phone"><?php echo ($user["name"]); ?></td>
+                        <td><?php echo ($user["keycode"]); ?></td>
+                        <td><?php echo ($user["email"]); ?></td>
+                        <td>
+                            <?php if($user["name"] == ''): ?><button class="btn btn-danger btn-xs del" data-id="<?php echo ($user["id"]); ?>"><i class="fa fa-trash-o "></i></button><?php endif; ?>
+                        </td>
+                    </tr><?php endforeach; endif; ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- /content-panel -->
+          </div>
+          <!-- /col-md-12 -->
+        </div>
+
+<script>
+    //生成7位随机字符串作为授权码
+    $("#keyCode").click(function(){
+        var keyCode = _getRandomString(7);
+        $("#key").val(keyCode);
+    })
+
+    //异步请求: 把授权码保存到users
+    $("#success").click(function(){
+        var keyCode = $("#key").val();
+        var url  = "<?php echo U('Admin/User/createKeyCode');?>";
+        var data = {'keycode':keyCode};
+        $.post(url,data,function(result){
+            if(result.code){
+                layer.open({
+                    title: '授权码'
+                    ,content: result.msg
+                    ,icon:6
+                    , yes: function(index, layero){
+                        //do something
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        window.location.href = result.url;
+                    }
+                });
+            }else{
+                layer.open({
+                    title: '授权码'
+                    ,content: result.msg
+                    ,icon:5
+                    , yes: function(index, layero){
+                        //do something
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        window.location.href = result.url;
+                    }
+                });
+            }
+        },'JSON')
+    })
+    
+    //异步申请:删除未注册成功的授权码
+    $(".del").click(function(){
+        var id   = $(this).attr('data-id');
+        var url  = "<?php echo U('Admin/User/delkeyCode');?>";
+        var data = {'id':id};
+        $.post(url,data,function(result){
+            if(result.code){
+                layer.open({
+                    title: '删除授权码'
+                    ,content: result.msg
+                    ,icon:6
+                    , yes: function(index, layero){
+                        //do something
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                        window.location.href = result.url;
+                    }
+                });
+            }
+        },'JSON')
+    })
+
+    //获取长度为len的随机字符串
+    function _getRandomString(len) {
+        var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'; // 默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1
+        var maxPos = $chars.length;
+        var pwd = '';
+        for (i = 0; i < len; i++) {
+            pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+        }
+        return pwd;
+    }
+</script>
 
         </section>
     </section>
