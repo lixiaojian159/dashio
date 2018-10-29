@@ -3,8 +3,8 @@
 /**
  * @Author: 李健
  * @Date:   2018-10-26 16:46:24
- * @Last Modified by:   lijian
- * @Last Modified time: 2018-10-27 00:57:14
+ * @Last Modified by:   banana
+ * @Last Modified time: 2018-10-29 10:29:35
  * @E-mail: 852688838@qq.com
  * @Tel: 18633899381
  */
@@ -51,4 +51,5 @@ class UserController extends BaseController{
 			echo json_encode($arr);
 		}
 	}
+
 }

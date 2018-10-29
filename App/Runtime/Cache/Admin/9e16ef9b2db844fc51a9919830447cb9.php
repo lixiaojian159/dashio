@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-24 10:52:40
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-24 15:33:56
+* @Last Modified time: 2018-10-29 14:02:44
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -28,10 +28,12 @@
   <!-- Custom styles for this template -->
   <link href="/Public/admin/css/style.css" rel="stylesheet">
   <link href="/Public/admin/css/style-responsive.css" rel="stylesheet">
+  <link href="/Public/admin/css/login-register.css" rel="stylesheet" />
   <!-- <link rel="stylesheet" type="text/css" href="/Public/layui/css/layui.css"> -->
   <script type="text/javascript" src="/Public/jquery/jquery.js"></script>
   <!-- <script type="text/javascript" src="/Public/layui/layui.js"></script> -->
   <script type="text/javascript" src="/Public/layer/layer.js"></script>
+  <script src="/Public/admin/js/login-register.js" type="text/javascript"></script>
   
   <!-- =======================================================
     Template Name: Dashio
@@ -42,6 +44,7 @@
 </head>
 
 <style>
+  body{padding-top: 60px;}
   .form-control-verify input{
     width: 150px;
   }
@@ -59,14 +62,14 @@
 
 <body>
 
-  <div id="login-page">
+<div id="login-page">
     <div class="container">
       <form class="form-login" action="index.html">
         <h2 class="form-login-heading">sign in now</h2>
         <div class="login-wrap">
-          <input type="text" class="form-control" name="name" placeholder="User ID" autofocus>
+          <input type="text" class="form-control" name="name" id="login_name" placeholder="User ID" autofocus>
           <br>
-          <input type="password" class="form-control" name="password" placeholder="Password">
+          <input type="password" class="form-control" name="password" id="login_password" placeholder="Password">
           <br/>
           <label class="form-control-verify">
               <input type="text" class="form-control" name="verify" placeholder="Verify" autofocus>
@@ -82,7 +85,7 @@
           <hr>
           <div class="registration">
             Don't have an account yet?<br/>
-            <a class="" href="#">
+            <a class="" href="javascript:;" onclick="openRegisterModal();">
               Create an account
               </a>
           </div>
@@ -108,8 +111,66 @@
         </div>
         <!-- modal -->
       </form>
+</div>
+
+<div class="container">
+         
+     <div class="modal fade login" id="loginModal">
+          <div class="modal-dialog login animated">
+              <div class="modal-content">
+                 <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Login with</h4>
+                    </div>
+                    <div class="modal-body">  
+                        <div class="box">
+                             <div class="content">
+                                <div class="social">
+                                    <a class="circle github" href="/auth/github">
+                                        <i class="fa fa-github fa-fw"></i>
+                                    </a>
+                                    <a id="google_login" class="circle google" href="/auth/google_oauth2">
+                                        <i class="fa fa-google-plus fa-fw"></i>
+                                    </a>
+                                    <a id="facebook_login" class="circle facebook" href="/auth/facebook">
+                                        <i class="fa fa-facebook fa-fw"></i>
+                                    </a>
+                                </div>
+                                <div class="division">
+                                    <div class="line l"></div>
+                                      <span>or</span>
+                                    <div class="line r"></div>
+                                </div>
+                                <div class="error"></div>
+                                <div class="form loginBox">
+                                    <form method="post" action="/login" accept-charset="UTF-8">
+                                    <input id="email" class="form-control" type="text" placeholder="Email" name="email">
+                                    <input id="password" class="form-control" type="password" placeholder="Password" name="password">
+                                    <input class="btn btn-default btn-login" type="button" value="Login" onclick="loginAjax()">
+                                    </form>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="box">
+                            <div class="content registerBox" style="display:none;">
+                             <div class="form">
+                                <form method="post" data-remote="true" action="" accept-charset="UTF-8">
+                                <input id="register_name" class="form-control" type="text" placeholder="Name" name="name">
+                                <input id="register_email" class="form-control" type="text" placeholder="Email" name="email">
+                                <input id="register_password" class="form-control" type="password" placeholder="Password" name="password">
+                                <input id="register_password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
+                                <input id="register_keycode" class="form-control" type="text" placeholder="KeyCode" name="keycode">
+                                <a class="btn btn-default btn-register" name="commit" id="register_submit">Create account</a>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
+              </div>
+          </div>
+      </div>
     </div>
-  </div>
+</div>
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="/Public/admin/lib/jquery/jquery.min.js"></script>
   <script src="/Public/admin/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -124,8 +185,8 @@
   <script>
     $(function(){
       $("#submit").click(function(){
-        var name     = $("input[name='name']").val();
-        var password = $("input[name='password']").val();
+        var name     = $("#login_name").val();
+        var password = $("#login_password").val();
         var verify   = $("input[name='verify']").val();
         var rem = $("input[name='remember']:checked");
         if(rem.size()>0){
@@ -163,10 +224,72 @@
         },'JSON');
       })
     })
-
+    
+    //验证码点击刷新
     function Code(){
         document.getElementById('verify').src = document.getElementById('verify').src + "?random=" + Math.random();
     }
+
+    //注册用户1.1
+    function openRegisterModal(){
+        showRegisterForm();
+        setTimeout(function(){
+            $('#loginModal').modal('show');    
+        }, 230);
+    }
+    //注册用户1.2
+    function showRegisterForm(){
+        $('.loginBox').fadeOut('fast',function(){
+            $('.registerBox').fadeIn('fast');
+            $('.login-footer').fadeOut('fast',function(){
+                $('.register-footer').fadeIn('fast');
+            });
+            $('.modal-title').html('Register with');
+        }); 
+        $('.error').removeClass('alert alert-danger').html('');          
+    }
+
+    $("#register_submit").click(function(){
+        var name     = $("#register_name").val();
+        var email    = $("#register_email").val();
+        var password = $("#register_password").val();
+        var password_confirmation = $("#register_password_confirmation").val();
+        var keycode  = $("#register_keycode").val();
+        console.log(name);
+        console.log(email);
+        console.log(password);
+        console.log(password_confirmation);
+        console.log(keycode);
+        var data = {'name':name,'email':email,'password':password,'password_confirmation':password_confirmation,'keycode':keycode};
+        var url = "<?php echo U('Admin/Index/register');?>";
+        $.post(url,data,function(result){
+
+          if(result.code){
+            layer.open({
+              title:'注册结果',
+              content: result.msg, //这里content是一个普通的String
+              icon:6,
+              yes: function(index, layero){
+                //do something
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                window.location.href = result.url;
+              }
+            });
+          }else{
+            layer.open({
+              title:'注册结果',
+              content: result.msg, //这里content是一个普通的String
+              icon:5,
+              yes: function(index, layero){
+                //do something
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                window.location.href = result.url;
+              }
+            });
+          }
+
+        },'JSON')
+    })
   </script>
 
 </body>

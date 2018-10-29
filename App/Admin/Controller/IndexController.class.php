@@ -96,4 +96,59 @@ class IndexController extends Controller {
         echo json_encode($arr);
     }
 
+
+    //接口: 注册用户
+// Array
+// (
+//     [name] => adminq
+//     [email] => 852688838@qq.com
+//     [password] => 123
+//     [password_confirmation] => 456
+//     [keycode] => 789
+// )
+    public function register(){
+        $data = I('post.');
+        //验证授权码
+        $is_keycode = $id = D('users')->getBykeycode($data['keycode']);
+        if($is_keycode == null){
+            echo json_encode(['code'=>0 , 'msg'=>'授权码错误,请联系超级管理员', 'url'=>U('Admin/Index/index')]);
+            exit;
+        }
+        //判断邮箱唯一
+        $is_unique_email = D('users')->getByEmail($data['email']);
+        if(!$is_unique_email){
+            echo json_encode(['code'=>0 , 'msg'=>'此邮箱已经注册', 'url'=>U('Admin/Index/index')]);
+            exit;
+        }
+        //判断账户唯一
+        $is_unique_name = D('users')->getByName($data['name']);
+        if(!$is_unique_name){
+            echo json_encode(['code'=>0 , 'msg'=>'此账户已经注册', 'url'=>U('Admin/Index/index')]);
+            exit;
+        }
+
+        if($data['password'] != $data['password_confirmation']){
+            echo json_encode(['code'=>0 , 'msg'=>'两次密码不一致', 'url'=>U('Admin/Index/index')]);
+            exit;
+        }
+
+        $data['salt']     = makeRandNum(5);
+        $data['password'] = md5($data['password'].$data['salt']);
+        $data['keycode']  = '';
+        $data['logintime']= time();
+        unset($data['password_confirmation']);
+        $res = M('users')->where('id ='.$id)->setField($data);
+        if($res){
+            $arr['code'] = 1;
+            $arr['msg']  = '注册成功';
+            $arr['url']  = U('Admin/Index/index');
+        }else{
+            $arr['code'] = 0;
+            $arr['msg']  = '注册失败';
+            $arr['url']  = U('Admin/Index/index');
+        }
+        echo json_encode($arr);
+    }
+
+
 }
