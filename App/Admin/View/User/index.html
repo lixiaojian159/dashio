@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-26 16:49:50
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-29 15:17:59
+* @Last Modified time: 2018-10-29 16:20:48
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -82,26 +82,32 @@
         var data = {'keycode':keyCode};
         $.post(url,data,function(result){
             if(result.code){
-                layer.open({
-                    title: '授权码'
-                    ,content: result.msg
-                    ,icon:6
-                    , yes: function(index, layero){
-                        //do something
-                        layer.close(index); //如果设定了yes回调，需进行手工关闭
-                        window.location.href = result.url;
-                    }
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.open({
+                        title: '授权码'
+                        ,content: result.msg
+                        ,icon:6
+                        , yes: function(index, layero){
+                            //do something
+                            layer.close(index); //如果设定了yes回调，需进行手工关闭
+                            window.location.href = result.url;
+                        }
+                    });
                 });
             }else{
-                layer.open({
-                    title: '授权码'
-                    ,content: result.msg
-                    ,icon:5
-                    , yes: function(index, layero){
-                        //do something
-                        layer.close(index); //如果设定了yes回调，需进行手工关闭
-                        window.location.href = result.url;
-                    }
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.open({
+                        title: '授权码'
+                        ,content: result.msg
+                        ,icon:5
+                        , yes: function(index, layero){
+                            //do something
+                            layer.close(index); //如果设定了yes回调，需进行手工关闭
+                            window.location.href = result.url;
+                        }
+                    });
                 });
             }
         },'JSON')
@@ -114,15 +120,18 @@
         var data = {'id':id};
         $.post(url,data,function(result){
             if(result.code){
-                layer.open({
-                    title: '删除授权码'
-                    ,content: result.msg
-                    ,icon:6
-                    , yes: function(index, layero){
-                        //do something
-                        layer.close(index); //如果设定了yes回调，需进行手工关闭
-                        window.location.href = result.url;
-                    }
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.open({
+                        title: '删除授权码'
+                        ,content: result.msg
+                        ,icon:6
+                        , yes: function(index, layero){
+                            //do something
+                            layer.close(index); //如果设定了yes回调，需进行手工关闭
+                            window.location.href = result.url;
+                        }
+                    });
                 });
             }
         },'JSON')

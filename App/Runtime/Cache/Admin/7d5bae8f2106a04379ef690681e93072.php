@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-25 14:41:03
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-26 17:02:48
+* @Last Modified time: 2018-10-29 16:16:47
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -30,12 +30,15 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
   <link href="/Public/admin/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="/Public/admin/css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="/Public/admin/lib/gritter/css/jquery.gritter.css" />
+  <link rel="stylesheet" type="text/css" href="/Public/admin/layui/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="/Public/admin/css/pages.css">
   <!-- Custom styles for this template -->
   <link href="/Public/admin/css/style.css" rel="stylesheet">
   <link href="/Public/admin/css/style-responsive.css" rel="stylesheet">
   <script type="text/javascript" src="/Public/jquery/jquery.js"></script>
   <script src="/Public/admin/lib/chart-master/Chart.js"></script>
-  <script type="text/javascript" src="/Public/layer/layer.js"></script>
+  <script type="text/javascript" src="/Public/layui/layui.js"></script>
+  <!-- <script type="text/javascript" src="/Public/layer/layer.js"></script> -->
 
   <!-- =======================================================
     Template Name: Dashio
