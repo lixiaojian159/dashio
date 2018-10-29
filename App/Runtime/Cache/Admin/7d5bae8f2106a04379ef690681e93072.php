@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-25 14:41:03
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-29 16:16:47
+* @Last Modified time: 2018-10-29 16:30:15
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -30,7 +30,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
   <link href="/Public/admin/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="/Public/admin/css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="/Public/admin/lib/gritter/css/jquery.gritter.css" />
-  <link rel="stylesheet" type="text/css" href="/Public/admin/layui/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="/Public/layui/css/layui.css">
   <link rel="stylesheet" type="text/css" href="/Public/admin/css/pages.css">
   <!-- Custom styles for this template -->
   <link href="/Public/admin/css/style.css" rel="stylesheet">
@@ -392,7 +392,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
               <h3>USER VISITS</h3>
             </div>
             <div class="custom-bar-chart">
-              <ul class="y-axis">
+              <ul class="y-axis" style="padding-left: 30px">
                 <li><span>10.000</span></li>
                 <li><span>8.000</span></li>
                 <li><span>6.000</span></li>
