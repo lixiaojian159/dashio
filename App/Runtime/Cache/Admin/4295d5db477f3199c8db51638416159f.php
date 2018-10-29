@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-25 14:41:03
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-26 17:02:48
+* @Last Modified time: 2018-10-29 15:19:12
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -30,6 +30,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
   <link href="/Public/admin/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="/Public/admin/css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="/Public/admin/lib/gritter/css/jquery.gritter.css" />
+  <link rel="stylesheet" type="text/css" href="/Public/admin/css/pages.css">
   <!-- Custom styles for this template -->
   <link href="/Public/admin/css/style.css" rel="stylesheet">
   <link href="/Public/admin/css/style-responsive.css" rel="stylesheet">
@@ -436,6 +437,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
           </div>
           <!-- /col-md-12 -->
         </div>
+        <ul class="paginList pager"><!-- 分页显示 --><?php echo ($page); ?></ul>
 
 <script>
     //生成7位随机字符串作为授权码
