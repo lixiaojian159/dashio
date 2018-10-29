@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-26 16:49:50
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-26 17:22:11
+* @Last Modified time: 2018-10-29 14:31:00
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -40,6 +40,7 @@
                     <th class="hidden-phone"><i class="fa fa-question-circle"></i> 用户名</th>
                     <th><i class="fa fa-bookmark"></i> 授权码</th>
                     <th><i class=" fa fa-edit"></i> 邮箱</th>
+                    <th><i class=" fa fa-edit"></i> 注册时间</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -50,6 +51,7 @@
                         <td class="hidden-phone">{$user.name}</td>
                         <td>{$user.keycode}</td>
                         <td>{$user.email}</td>
+                        <td>{$user.logintime|date="Y-m-d H:i:s",###}</td>
                         <td>
                             <if condition="$user.name eq ''">
                             <button class="btn btn-danger btn-xs del" data-id="{$user.id}"><i class="fa fa-trash-o "></i></button>

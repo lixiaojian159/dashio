@@ -414,6 +414,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
                     <th class="hidden-phone"><i class="fa fa-question-circle"></i> 用户名</th>
                     <th><i class="fa fa-bookmark"></i> 授权码</th>
                     <th><i class=" fa fa-edit"></i> 邮箱</th>
+                    <th><i class=" fa fa-edit"></i> 注册时间</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -423,6 +424,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
                         <td class="hidden-phone"><?php echo ($user["name"]); ?></td>
                         <td><?php echo ($user["keycode"]); ?></td>
                         <td><?php echo ($user["email"]); ?></td>
+                        <td><?php echo (date("Y-m-d H:i:s",$user["logintime"])); ?></td>
                         <td>
                             <?php if($user["name"] == ''): ?><button class="btn btn-danger btn-xs del" data-id="<?php echo ($user["id"]); ?>"><i class="fa fa-trash-o "></i></button><?php endif; ?>
                         </td>
