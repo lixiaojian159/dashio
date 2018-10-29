@@ -2,7 +2,7 @@
 * @Author: 李健
 * @Date:   2018-10-26 16:49:50
 * @Last Modified by:   banana
-* @Last Modified time: 2018-10-29 16:28:30
+* @Last Modified time: 2018-10-29 16:37:39
 * @E-mail: 852688838@qq.com
 * @Tel: 18633899381
 -->
@@ -66,7 +66,7 @@
           </div>
           <!-- /col-md-12 -->
         </div>
-        <div id="page"></div>
+        <ul class="paginList pager"><!-- 分页显示 -->{$page}</ul>
 
 <script>
     //生成7位随机字符串作为授权码
@@ -147,16 +147,5 @@
         }
         return pwd;
     }
-
-    //分页layui
-    layui.use('laypage', function(){
-        var laypage = layui.laypage;
-      
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
-            ,count: 50 //数据总数，从服务端得到
-        });
-    });
 </script>
 </block>

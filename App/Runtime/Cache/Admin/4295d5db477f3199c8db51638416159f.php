@@ -439,7 +439,7 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
           </div>
           <!-- /col-md-12 -->
         </div>
-        <div id="page"></div>
+        <ul class="paginList pager"><!-- 分页显示 --><?php echo ($page); ?></ul>
 
 <script>
     //生成7位随机字符串作为授权码
@@ -520,17 +520,6 @@ $user_id = cookie('user_id'); $user_name = cookie('user_name'); $gravatar_src = 
         }
         return pwd;
     }
-
-    //分页layui
-    layui.use('laypage', function(){
-        var laypage = layui.laypage;
-      
-        //执行一个laypage实例
-        laypage.render({
-            elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
-            ,count: 50 //数据总数，从服务端得到
-        });
-    });
 </script>
 
         </section>
