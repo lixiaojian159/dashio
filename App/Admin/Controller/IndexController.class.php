@@ -29,7 +29,8 @@ class IndexController extends Controller {
     	$user = D('users')->getUserByName($name);
 
     	//验证验证码
-    	$res_verify = $this->check_verify($verify);
+    	$verify_model = new VerifyController();
+        $res_verify   = $verify_model->check_verify($verify);
     	if(!$res_verify){
     		$info['code'] = 0;
     		$info['msg']  = '验证码错误';
@@ -68,23 +69,6 @@ class IndexController extends Controller {
     	echo json_encode($info);
     }
 
-    //生成验证码
-    public function verify(){
-    	$Verify = new \Think\Verify();
-		$Verify->fontSize = 30;
-		$Verify->length   = 4;
-		$Verify->useNoise = false;
-		$Verify->useCurve = false;
-		$Verify->entry();
-    }
-
-    //检测输入的验证码是否正确，$code为用户输入的验证码字符串
-    function check_verify($code, $id = ''){
-	    $verify = new \Think\Verify();
-	    return $verify->check($code, $id);
-    }
-
-
     //退出系统
     public function logout(){
         cookie('user_id',null);
@@ -98,14 +82,6 @@ class IndexController extends Controller {
 
 
     //接口: 注册用户
-// Array
-// (
-//     [name] => adminq
-//     [email] => 852688838@qq.com
-//     [password] => 123
-//     [password_confirmation] => 456
-//     [keycode] => 789
-// )
     public function register(){
         $data = I('post.');
         //验证授权码
